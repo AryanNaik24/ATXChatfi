@@ -1,0 +1,32 @@
+
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./Backend:/app
+    ports:
+      - "8000:8000"
+    environment: {}  # Empty mapping, or you can remove this if not needed
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./chat-frontend
+      dockerfile: Dockerfile
+    container_name: react_app
+    volumes:
+      - ./chat-frontend:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
